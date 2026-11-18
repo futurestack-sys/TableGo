@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block content %}
+<h1>{{ rest.name }} · setup</h1><p><a href="{% url 'manage' %}">← Reservations</a></p>
+<div class="card"><h2>Tables</h2><table>{% for t in tables %}<tr><td>{{ t.name }}</td><td>{{ t.seats }} seats</td><td>
+<form method="post">{% csrf_token %}<input type="hidden" name="action" value="del_table"><input type="hidden" name="pk" value="{{ t.pk }}"><button class="s">Remove</button></form></td></tr>{% endfor %}</table>
+<form method="post">{% csrf_token %}<input type="hidden" name="action" value="add_table">{{ tf.as_p }}<button class="btn">Add table</button></form></div>
+<div class="card"><h2>Set menus</h2><table>{% for s in sets %}<tr><td><b>{{ s.name }}</b> ₱{{ s.price }}<br><span class="mu">{{ s.description }}</span></td><td>{% if s.active %}Offered{% else %}Hidden{% endif %}</td><td>
+<form method="post" style="display:inline">{% csrf_token %}<input type="hidden" name="action" value="toggle_set"><input type="hidden" name="pk" value="{{ s.pk }}"><button class="s">{% if s.active %}Hide{% else %}Show{% endif %}</button></form>
+<form method="post" style="display:inline">{% csrf_token %}<input type="hidden" name="action" value="del_set"><input type="hidden" name="pk" value="{{ s.pk }}"><button class="s">Delete</button></form></td></tr>{% endfor %}</table>
+<form method="post">{% csrf_token %}<input type="hidden" name="action" value="add_set">{{ sf.as_p }}<button class="btn">Add set menu</button></form></div>
+{% endblock %}

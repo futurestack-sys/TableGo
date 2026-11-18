@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block content %}
+<h1>{{ rest.name }} · reservations</h1>
+<p><a href="{% url 'setup' %}">Manage tables &amp; set menus →</a></p>
+<form method="get">Status: <select name="status" onchange="this.form.submit()">
+<option value="">All</option>
+<option value="pending" {% if status == "pending" %}selected{% endif %}>Pending</option>
+<option value="confirmed" {% if status == "confirmed" %}selected{% endif %}>Confirmed</option>
+<option value="declined" {% if status == "declined" %}selected{% endif %}>Declined</option>
+<option value="cancelled" {% if status == "cancelled" %}selected{% endif %}>Cancelled</option></select></form>
+<table><tr><th>Code</th><th>Guest</th><th>When</th><th>Party</th><th>Table</th><th>Set</th><th>Status</th><th>Actions</th></tr>
+{% for r in items %}<tr><td>R{{ r.pk }}</td><td>{{ r.customer.username }}<br><span class="mu">{{ r.phone }}</span>{% if r.note %}<br><span class="mu">{{ r.note }}</span>{% endif %}</td>
+<td>{{ r.date }} {{ r.time }}</td><td>{{ r.guests }}</td><td>{{ r.table.name|default:"-" }}</td><td>{{ r.set_menu.name|default:"None" }}</td><td>{{ r.get_status_display }}</td>
+<td>{% if r.status == "pending" %}<form method="post" action="{% url 'manage_status' r.pk 'confirmed' %}" style="display:inline">{% csrf_token %}<button class="s">Confirm</button></form>
+<form method="post" action="{% url 'manage_status' r.pk 'declined' %}" style="display:inline">{% csrf_token %}<button class="s">Decline</button></form>{% endif %}</td></tr>
+{% empty %}<tr><td colspan="8" class="mu">No reservations.</td></tr>{% endfor %}</table>
+{% endblock %}

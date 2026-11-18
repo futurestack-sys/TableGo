@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% load static %}{% block content %}
+<section class="hero" style="--hero-image: url('{% static 'booking/img/chloe.jpg' %}')"><h1>Restaurant Set<br>Reservation System</h1><p>Choose from our {{ restaurants|length }} exceptional restaurants, reserve your table, and enjoy a memorable dining experience.</p>
+<a class="gold" href="{% url 'restaurants' %}">📅 Reserve a Table</a><a class="outline" href="{% url 'restaurants' %}">Explore Restaurants</a></section>
+{% include "_cards.html" %}{% endblock %}

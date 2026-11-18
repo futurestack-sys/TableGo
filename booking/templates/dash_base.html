@@ -1,0 +1,28 @@
+{% load static %}<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dashboard · TableGo</title><link rel="icon" type="image/svg+xml" href="{% static 'booking/img/tablego-icon.svg' %}"><link rel="stylesheet" href="{% static 'booking/site.css' %}?v=3"></head><body>
+<div class="dash"><aside class="side"><div class="logo">{% include "_logo.html" %}<b>Table<span>Go</span></b><small>RESTAURANT</small><em>Restaurant Set Reservation System</em></div>
+<button class="side-menu-toggle" type="button" aria-expanded="false" aria-controls="side-nav"><span class="menu-icon" aria-hidden="true"></span>Menu</button><nav class="side-nav" id="side-nav">
+<a class="{% if nav == 'dashboard' %}on{% endif %}" href="{% url 'dashboard' %}">▦ Dashboard</a>
+<a class="{% if nav == 'reservations' %}on{% endif %}" href="{% url 'd_reservations' %}">📅 Reservation Management</a>
+{% if is_admin %}<a class="{% if nav == 'restaurants' %}on{% endif %}" href="{% url 'd_restaurants' %}">🏪 Restaurant Management</a>{% endif %}
+<a class="{% if nav == 'tables' %}on{% endif %}" href="{% url 'd_tables' %}">🪑 Table Management</a>
+{% if is_admin %}<a class="{% if nav == 'customers' %}on{% endif %}" href="{% url 'd_customers' %}">👥 Customer Management</a>{% endif %}
+<a href="{% url 'home' %}">↩ Back to website</a>
+<form method="post" action="{% url 'logout' %}">{% csrf_token %}<button>⎋ Logout</button></form></nav></aside>
+<div class="content"><div class="dtop"><div>{% block heading %}{% endblock %}</div><b>{% if is_admin %}Admin{% else %}Manager{% endif %} · {{ user.username }}</b></div>
+<div class="dbody">{% for m in messages %}<div class="msg {{ m.tags }}">{{ m }}</div>{% endfor %}{% block body %}{% endblock %}</div></div></div>
+<script>
+const menuButton = document.querySelector(".side-menu-toggle");
+const sideNav = document.querySelector("#side-nav");
+menuButton.addEventListener("click", () => {
+	const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
+	menuButton.setAttribute("aria-expanded", String(!isExpanded));
+	sideNav.classList.toggle("open", !isExpanded);
+});
+document.addEventListener("keydown", (event) => {
+	if (event.key === "Escape" && menuButton.getAttribute("aria-expanded") === "true") {
+		menuButton.setAttribute("aria-expanded", "false");
+		sideNav.classList.remove("open");
+		menuButton.focus();
+	}
+});
+</script></body></html>

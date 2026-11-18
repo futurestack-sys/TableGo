@@ -1,0 +1,5 @@
+<div class="plan">
+{% for f in rest.fixtures %}<span class="fx{% if f.v %} v{% endif %}{% if f.b %} b{% endif %}" style="left:{{ f.x }}%;top:{{ f.y }}%;width:{{ f.w }}%;height:{{ f.h }}%">{{ f.label }}</span>{% endfor %}
+{% for c in cells %}<label class="tbl {{ c.t.shape }} {{ c.state }}" style="left:{{ c.t.x }}%;top:{{ c.t.y }}%" title="{{ c.t.name }} · {{ c.t.seats }} seats">
+{% if selectable and c.state == "free" %}<input type="radio" name="table" value="{{ c.t.pk }}" required>{% endif %}<b>{{ c.t.name }}</b><small>{{ c.t.seats }} seats</small></label>{% endfor %}
+</div>

@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block content %}
+<h1>{{ rest.name }}</h1><p class="mu">{{ rest.cuisine }}. {{ rest.description }}</p>
+<div class="card"><h2>Set menus (per guest)</h2>
+{% for s in sets %}<p><b>{{ s.name }}</b> · ₱{{ s.price }}<br><span class="mu">{{ s.description }}</span></p>{% empty %}<p class="mu">No set menus right now.</p>{% endfor %}</div>
+<div class="card"><h2>Reserve a table</h2>
+<form method="post">{% csrf_token %}{{ form.as_p }}<button class="btn">Request reservation</button></form>
+{% if not user.is_authenticated %}<p class="mu">You will be asked to log in when you submit.</p>{% endif %}</div>
+{% endblock %}

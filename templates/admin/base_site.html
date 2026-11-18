@@ -1,0 +1,16 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | TableGo Admin{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<link rel="icon" type="image/svg+xml" href="{% static 'booking/img/tablego-icon.svg' %}">
+<link rel="stylesheet" href="{% static 'booking/admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name" class="tablego-brand"><a href="{% url 'admin:index' %}">{% include "_logo.html" %}<span>Table<span class="brand-accent">Go</span><small>ADMIN</small></span></a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
